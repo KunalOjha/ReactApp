@@ -11,21 +11,26 @@ class App extends Component{
     constructor(props) {
         super(props);
         this.state = {
+            term: '',
             videos: [],
             selectedVideo: null
         };
+    this.videoSearch('Learn React JS');
+    }
 
-        YTSearch({key: API_KEY, term: 'Chicago Sports'}, (videos) => {
+    videoSearch(query) {
+        YTSearch({key: API_KEY, term: query}, (videos) => {
             this.setState({
-                videos:videos,
+                videos: videos,
                 selectedVideo: videos[0]
             });
         });
-    }
+    };
+
     render() {
         return (
         <div>
-            <SearchBar/>
+            <SearchBar onSearchTermChange={(term)=>this.videoSearch(term)}/>
             <VideoDetail 
                 videoItem={this.state.selectedVideo}></VideoDetail>
             <VideoList 
